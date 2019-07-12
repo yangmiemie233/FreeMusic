@@ -1,0 +1,78 @@
+<!doctype html>
+<html data-n-head-ssr data-n-head="">
+
+<head data-n-head="">
+    <title data-n-head="true">阿狸搜索</title>
+    <meta data-n-head="true" charset="utf-8">
+    <script src="./js/jQuery.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/search.js"></script>
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/rankingList.css">
+    <script>
+        $(function () {
+            $("#search").keydown(function () {
+                if(event.keyCode==13){
+                    $("#toFind").click();
+                }
+            })
+        });
+    </script>
+</head>
+
+<body data-n-head="">
+<div data-server-rendered="true" id="__nuxt">
+
+    <!---->
+    <div id="__layout">
+        <div class="page">
+            <div class="container">
+                <div class="search_page">
+                    <div class="search_out">
+                        <div class="bg"></div>
+                        <div class="search_inn">
+                            <div>
+                                <div class="search_inn flex_c search_page">
+                                    <!----><input id ="search" maxlength="128" type="text" placeholder="搜索音乐/MV/歌单/歌手" value="" class="search"> <i id="toFind" onclick="searchSongs(function() {
+                                                  var a=(document.getElementById('search').value);
+                                                  alert(a);
+                                                  return a;
+                                                  })" class="icon iconfont icon-header_icon_search_" ></i>
+                                </div>
+                                <div class="list">
+                                    <p class="tit" style="display:;">大家都在搜</p>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tabs"><span class="text">搜索结果</span>
+                            <div>
+                                <a href="javascript:;" class="active" onclick="searchSongs(function() {
+                                                  var a=(document.getElementById('search').value);
+                                                  return a;
+                                                  });">单曲</a>
+                                <a href="javascript:;" onclick="searchAlbum()">专辑</a>
+                                <a href="javascript:;" onclick="searchSinger()">歌手</a>
+                            </div>
+                        </div>
+                        <div id="searchInfo">
+                            
+                        </div>
+                        <div id="pageSize">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+</body>
+
+</html>

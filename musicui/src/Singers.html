@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>歌手</title>
+    <link rel="stylesheet" href="./css/homePage.css">
+    <link rel="stylesheet" href="./css/singer.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/ly.css">
+    <script src="js/jQuery.js"></script>
+    <script src="js/Singers.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#search").keydown(function () {
+                if(event.keyCode==13){
+                    var searchContent = $("#search").val();
+                    if(searchContent!=null||searchContent!=""){
+                        alert(searchContent);
+                        window.location.href="search.html?searchContent="+ encodeURI(encodeURI(searchContent));
+                    }
+                }
+            })
+        });
+
+        // 点击用户名退出登录
+        $(function(){
+            $("#registerSpan").click(function(){
+                // alert("点击了!");
+                $.confirm({
+                    title: '确认',
+                    content: '确认退出?',
+                    buttons: {
+                        ok: {
+                            text: '确认',
+                            // btnClass: 'btn-primary',
+                            action: function() {
+                                $.ajax({
+                                    xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                                    contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                                    url: "http://localhost:8080/exitUser.do",
+                                    type: 'POST',
+                                    data: {},
+                                    dataType: 'json',
+                                    success: function (flg) {
+                                        if(flg){
+                                            alert("退出成功!");
+                                            $(location).prop("href","./index.html");
+                                        }
+                                    },
+                                    error: function () {
+                                        console.log('请求超时或系统出错!');
+                                    }
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '取消',
+                            action: function() {
+                                // alert("点击了取消");
+                            }
+                            // btnClass: 'btn-primary'
+                        }
+                    }
+                });
+            });
+
+        });
+
+        $(function(){
+            $.ajax({
+                xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                url: "http://localhost:8080/getSession.do",
+                type: 'POST',
+                data: {},
+                dataType: 'json',
+                success: function (requestapi) {
+                    if(requestapi.data != null){
+                        // 整体替换
+                        // $("#reg_text").html("<div class=\"reg_text\"><span style=\"font-size: 16px\"><span>欢迎你</span> <span>,</span> <a href=\"#\" id=\"userName\">"
+                        // + requestapi.data[0].userName
+                        // +"</a></span></div>\n"
+                        // +"</div>");
+
+                        $("#loginSpan").text("欢迎你");
+                        $("#registerSpan").text(requestapi.data[0].userName);
+                        $("#placehoder").text(",");
+                        // alert(requestapi.data[0].userName);
+                    }
+                },
+                error: function () {
+                  console.log('请求超时或系统出错!');
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+<div>
+    <div class="container" style="width:1500px;">
+        <div class="header">
+            <div class="flex_c">
+                <a href="./index.html" class="header-logo">
+                    <span class="logo"
+                          style="    text-shadow: -7px 5px 4px #ffdd39;font-size: 35px;font-family: 华文楷体;font-weight: bold">阿狸音乐</span>
+                </a>
+                <ul class="nav">
+                    <li class="item active"><a href="./index.html">发现音乐</a></li>
+                    <li class="item "><a href="">下载客户端</a></li>
+                    <li class="item "><a href="">音乐现场</a></li>
+                    <li class="item "><a href="">VIP会员</a></li>
+                    <li class="item "><a href="">酷我耳机</a></li>
+                    <li class="item "><a href="">更多<span class="iconfont">&#xe65a;</span></a></li>
+                </ul>
+            </div>
+            <div class="flex_c nav_r">
+                <div class="search_out">
+                    <div>
+                        <div class="search_inn flex_c">
+                            <span class="iconfont">&#xe6a2;</span>
+                            <input id="search" maxlength="128" type="text" placeholder="搜索音乐/MV/歌单/歌手" value="" class="search">
+                        </div>
+                    </div>
+                </div>
+                <div id="reg_text" class="reg_text"><span id="loginSpan"><a href="./login.html">登录</a></span> <span id="placehoder">/</span> <span id="registerSpan"><a
+                        href="./register.html">注册</a></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="sub_nav">
+        <a href="./index.html" class="">推荐</a>
+        <a href="./renkingList.html" class="">排行榜</a>
+        <a href="./Singers.html" class="active">歌手</a>
+        <a href="javascript:;" class="">歌单</a>
+        <a href="javascript:;" class="">MV</a>
+    </div>
+    <div class="container">
+        <ul class="tag_en" id="Atype">
+            <li class="active">
+                热门
+            </li>
+            <li class="" onclick="getSingerByType('A',1)">A</li>
+            <li class="" onclick="getSingerByType('B',1)">B</li>
+            <li class="" onclick="getSingerByType('C',1)">C</li>
+            <li class="" onclick="getSingerByType('D',1)">D</li>
+            <li class="" onclick="getSingerByType('E',1)">E</li>
+            <li class="" onclick="getSingerByType('F',1)">F</li>
+            <li class="" onclick="getSingerByType('G',1)">G</li>
+            <li class="" onclick="getSingerByType('H',1)">H</li>
+            <li class="" onclick="getSingerByType('I',1)">I</li>
+            <li class="" onclick="getSingerByType('J',1)">J</li>
+            <li class="" onclick="getSingerByType('K',1)">K</li>
+            <li class="" onclick="getSingerByType('L',1)">L</li>
+            <li class="" onclick="getSingerByType('M',1)">M</li>
+            <li class="" onclick="getSingerByType('N',1)">N</li>
+            <li class="" onclick="getSingerByType('O',1)">O</li>
+            <li class="" onclick="getSingerByType('P',1)">P</li>
+            <li class="" onclick="getSingerByType('Q',1)">Q</li>
+            <li class="" onclick="getSingerByType('R',1)">R</li>
+            <li class="" onclick="getSingerByType('S',1)">S</li>
+            <li class="" onclick="getSingerByType('T',1)">T</li>
+            <li class="" onclick="getSingerByType('U',1)">U</li>
+            <li class="" onclick="getSingerByType('V',1)">V</li>
+            <li class="" onclick="getSingerByType('W',1)">W</li>
+            <li class="" onclick="getSingerByType('X',1)">X</li>
+            <li class="" onclick="getSingerByType('Y',1)">Y</li>
+            <li class="" onclick="getSingerByType('Z',1)">Z</li>
+
+
+        </ul>
+    </div>
+    <div class="singer-center">
+        <div class="rec_list" id="pushSinger">
+
+        </div>
+        <div id="pageSize">
+        </div>
+    </div>
+</div>
+<div class="ly_content_body">
+
+
+</div>
+
+<div class="clearfix"></div>
+<div class="ly_footer">
+    <div class="ly_foot_body">
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">下载酷我音乐客户端</h2><br>
+            <a href="#">
+                <img src="./img/wr_before.png">
+                <p>PC版</p>
+            </a>
+
+            <a href="#">
+                <img src="./img/ad_before.png">
+                <p>Android</p>
+            </a>
+            <a href="#">
+                <img src="./img/ip_before.png">
+                <p>iphone版</p>
+            </a>
+
+        </div>
+
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">协议与声明</h2><br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">用户服务协议</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">免责声明</a>
+
+            <br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">隐私政策</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">权利声明</a>
+
+            <br>
+        </div>
+
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">其他</h2><br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">联系我们</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">免责声明</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">诚聘英才</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">广告服务</a>
+
+            <a style="width: 60%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">未成年人家长监控工程</a>
+
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+</html>

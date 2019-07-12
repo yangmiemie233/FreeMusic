@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+
+  <title>Music 后台管理</title>
+
+  <!-- Bootstrap -->
+  <link href="../statics/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="../statics/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="../statics/css/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="../statics/css/green.css" rel="stylesheet">
+  <!-- bootstrap-progressbar -->
+  <link href="../statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="../statics/css/jqvmap.min.css" rel="stylesheet" />
+  <link href="../statics/css/dropzone.min.css" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="../statics/css/custom.min.css"	rel="stylesheet">
+
+</head>
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form action="#" onsubmit="false" method="post">
+              <h1>后台管理系统</h1>
+              <div>
+                <input type="text" class="form-control" name="adminName" id="adminName" placeholder="请输入用户名" required="" />
+              </div>
+              <div>
+                <input type="password" class="form-control" name="adminPassword" id="adminPassword" placeholder="请输入密码" required="" />
+              </div>
+              <div>
+              	<button type="button" onclick="login()" class="btn btn-success">登     录</button>
+              	<button type="reset" class="btn btn-default">重　填</button>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <div>
+                  <p>©2019 All Rights Reserved. </p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+
+<!-- jQuery -->
+<script src="../statics/js/jquery.min.js"></script>
+<script type="text/javascript">
+  function login(){
+
+    var adminName = document.getElementById("adminName").value;
+
+    var adminPassword = document.getElementById("adminPassword").value;
+
+    $.ajax({
+      type: 'POST',
+      url:'http://127.0.0.1:8080/main/adminlogin.do',
+      xhrFields:{withCredentials:true},//前端适配：允许session跨域
+      contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+      data: {
+        uname:adminName,
+        pwd:adminPassword
+      },
+      success:function (result) {
+
+        if(result.result==true || result.result == 'true'){
+
+          window.confirm('登录成功');
+          window.location.href = "./main.html"
+        }else{
+          window.confirm(result.msg)
+        }
+      },
+      error:function () {
+        window.confirm('程序出错')
+      }
+    })
+
+
+  }
+</script>
+
+
+</html>

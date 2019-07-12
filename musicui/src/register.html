@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="./css/homePage.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <script src="./js/jQuery.js"></script>
+    <script>
+
+        // 异步进行注册
+        $(function(){
+            $("#registerBtn").click(function(){
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var email = $("#email").val();
+            if (username != "" && password != "" && email != ""){
+                $.ajax({
+                url: 'http://localhost:8080/register.do',
+                type: 'POST',
+                data: {username: username,password: password,email: email},
+                dataType: 'json',
+                success: function (requestapi) {
+                    if(requestapi.flg){
+                        alert("注册成功!,请登录");
+                        $(location).prop("href","./login.html");
+                    }else{
+                        alert("注册失败!");
+                    }
+                },
+                error: function () {
+                    console('请求超时或系统出错!');
+            }
+            });
+            }
+        });
+    });
+    
+        //验证注册输入的两次密码是否一致
+        $(function(){
+            $("#confirmPassword").blur(function(){
+                var password = $("#password").val();
+                var confirmPad = $(this).val();
+                if (password != confirmPad) {
+                    $("#registerBtn").prop("disabled",true);
+                    $("#confirmPadT").css("display","block");
+                }else{
+                    $("#registerBtn").prop("disabled",false);
+                    $("#confirmPadT").css("display","none");
+                }
+            });
+        });
+
+    // 异步进行注册账号验证是否存在
+    $(function(){
+        $("#username").blur(function(){
+            var username = $(this).val();
+            $.ajax({
+                url: 'http://localhost:8080/confirmUser.do',
+                type: 'POST',
+                data: {username: username},
+                dataType: 'json',
+                success: function (requestapi) {
+                    if(requestapi.data !=null && (requestapi.data).length >0){
+                        $("#registerBtn").prop("disabled", true);
+                        $("#confirmUser").css("display","block");
+                    }else{
+                        $("#registerBtn").prop("disabled", false);
+                        $("#confirmUser").css("display","none");
+                    }
+                },
+                error: function () {
+                  console.log('请求超时或系统出错!');
+            }
+            });
+        });
+    });
+        $(function () {
+            $("#search").keydown(function () {
+                if(event.keyCode==13){
+                    var searchContent = $("#search").val();
+                    if(searchContent!=null||searchContent!=""){
+                        alert(searchContent);
+                        window.location.href="search.html?searchContent="+ encodeURI(encodeURI(searchContent));
+                    }
+                }
+            })
+        });
+
+    </script>
+</head>
+<body>
+<div class="page">
+    <div class="header">
+        <div class="container" style="width:1500px;">
+            <div class="header">
+                <div class="flex_c">
+                    <a href="./index.html" class="header-logo">
+                <span class="logo"
+                      style="    text-shadow: -7px 5px 4px #ffdd39;font-size: 35px;font-family: 华文楷体;font-weight: bold">阿狸音乐</span>
+                    </a>
+                    <ul class="nav">
+                        <li class="item active"><a href="./index.html">发现音乐</a></li>
+                        <li class="item "><a href="">下载客户端</a></li>
+                        <li class="item "><a href="">音乐现场</a></li>
+                        <li class="item "><a href="">VIP会员</a></li>
+                        <li class="item "><a href="">酷我耳机</a></li>
+                        <li class="item "><a href="">更多<span class="iconfont">&#xe65a;</span></a></li>
+                    </ul>
+                </div>
+                <div class="flex_c nav_r">
+                    <div class="search_out">
+                        <div>
+                            <div class="search_inn flex_c">
+                                <span class="iconfont">&#xe6a2;</span>
+                                <input id="search" maxlength="128" type="text" placeholder="搜索音乐/MV/歌单/歌手" value="" class="search"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reg_text"><span><a href="./login.html">登录</a></span> <span
+                    >/</span> <span><a href="./register.html">注册</a></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="wrapper-register">
+            <div class="icont"></div>
+            <div class="title"><span>Register</span></div>
+            <div class="container-form">
+                
+                    <div>
+                    <div class="wrapper-username">
+                        <span class="iconfont">&#xe66c;</span>
+                        <input id="username" type="text" class="username" placeholder="username" required="required">
+                        <!-- 确认用户名提示信息 -->
+                        <span style="position: absolute;margin-left: 24%;color: rgb(255, 0, 0);display: none;" id="confirmUser">用户名太受欢迎了,换一个</span>
+                    </div>
+                    <div class="wrapper-password">
+                        <span class="iconfont">&#xe63d;</span>
+                        <input id="password" type="password" class="password" placeholder="password" required="required">
+                    </div>
+                    <div class="wrapper-password">
+                            <span class="iconfont">&#xe63d;</span>
+                            <input id="confirmPassword" type="password" class="password" placeholder="confirm password" required="required">
+                            <!-- 确认密码提示信息 -->
+                            <span style="position: absolute;margin-left: 24%;color: rgb(255, 0, 0);display: none;" id="confirmPadT">两次密码不一致</span>
+                        </div>
+                        
+
+                    <div class="wrapper-password">
+                        <span class="iconfont">&#xe6a6;</span>
+                        <input id="email" type="text" class="email" placeholder="email" required="required">
+                    </div>
+                    <button id="registerBtn" style="margin-bottom: 25px" class="btn btn-primary">注册</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

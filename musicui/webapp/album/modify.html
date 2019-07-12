@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Music 后台管理</title>
+
+    <!-- Bootstrap -->
+    <link href="../statics/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../statics/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../statics/css/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../statics/css/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="../statics/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../statics/css/jqvmap.min.css" rel="stylesheet" />
+    <link href="../statics/css/dropzone.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../statics/css/custom.min.css" rel="stylesheet">
+
+</head>
+
+<body class="nav-md footer_fixed">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a class="site_title" href="../admin/main.html"><i class="fa fa-paw"></i> <span>Music 后台管理</span>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img alt="..." class="img-circle profile_img" src="../statics/images/img.jpg">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>管理员</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
+                        <div class="menu_section">
+                            <h3>管理员</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-edit"></i>用户管理<span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="./list.html">用户信息管理</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i>音乐资源管理<span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="../singer/list.html">歌手资源</a>
+                                        </li>
+                                        <li><a href="../song/list.html">歌曲资源</a>
+                                        </li>
+                                        <li><a href="../album/list.html">专辑资源</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i>广告管理<span
+                                            class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="../advertisement/list.html">广告信息管理</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+
+                    </div>
+                    <!-- /sidebar menu -->
+
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-placement="top" data-toggle="tooltip" title="Settings">
+                            <span aria-hidden="true" class="glyphicon glyphicon-cog"></span>
+                        </a> <a data-placement="top" data-toggle="tooltip" title="FullScreen">
+                            <span aria-hidden="true" class="glyphicon glyphicon-fullscreen"></span>
+                        </a> <a data-placement="top" data-toggle="tooltip" title="Lock"> <span aria-hidden="true"
+                                class="glyphicon glyphicon-eye-close"></span>
+                        </a> <a data-placement="top" data-toggle="tooltip" href="../admin/adminlogin.html" title="Logout"> <span
+                                aria-hidden="true" class="glyphicon glyphicon-off"></span> </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i>
+                            </a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class=""><a aria-expanded="false" class="user-profile dropdown-toggle"
+                                    data-toggle="dropdown" href="javascript:;"> <img alt=""
+                                        src="../statics/images/img.jpg">管理员 <span class=" fa fa-angle-down"></span> </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="../admin/adminlogin.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown" role="presentation">
+
+                                <ul class="dropdown-menu list-unstyled msg_list" id="menu1" role="menu">
+                                    <li><a> <span class="image"><img alt="Profile Image"
+                                                    src="../statics/images/img.jpg" />
+                                            </span> <span> <span>John Smith</span> <span class="time">3
+                                                    mins ago</span> </span> <span class="message"> Film festivals used
+                                                to be do-or-die moments for movie makers. They were where...
+                                            </span> </a></li>
+                                    <li><a> <span class="image"><img alt="Profile Image"
+                                                    src="../statics/images/img.jpg" />
+                                            </span> <span> <span>John Smith</span> <span class="time">3
+                                                    mins ago</span> </span> <span class="message"> Film festivals used
+                                                to be do-or-die moments for movie makers. They were where...
+                                            </span> </a></li>
+                                    <li><a> <span class="image"><img alt="Profile Image"
+                                                    src="../statics/images/img.jpg" />
+                                            </span> <span> <span>John Smith</span> <span class="time">3
+                                                    mins ago</span> </span> <span class="message"> Film festivals used
+                                                to be do-or-die moments for movie makers. They were where...
+                                            </span> </a></li>
+                                    <li><a> <span class="image"><img alt="Profile Image"
+                                                    src="../statics/images/img.jpg" />
+                                            </span> <span> <span>John Smith</span> <span class="time">3
+                                                    mins ago</span> </span> <span class="message"> Film festivals used
+                                                to be do-or-die moments for movie makers. They were where...
+                                            </span> </a></li>
+                                    <li>
+                                        <div class="text-center">
+                                            <a> <strong>See All Alerts</strong> <i class="fa fa-angle-right"></i> </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <div class="right_col" role="main">
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>添加数据页面 <i class="fa fa-user"></i><small>这里可以是管理员名字 或者可以删除
+                                        - 您可以这里 Music 后台数据管理 。^_^</small></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="clearfix"></div>
+                                <form class="form-horizontal form-label-left" action="devaddsave" method="post"
+                                    enctype="multipart/form-data">
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">专辑名: <span
+                                                class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="albumName" class="form-control col-md-7 col-xs-12"
+                                                data-validate-length-range="20" data-validate-words="1" name="albumName"
+                                                required="required" placeholder="专辑名" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">专辑封面图地址:
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="albumImg" class="form-control col-md-7 col-xs-12"
+                                                data-validate-length-range="20" data-validate-words="1" name="albumImg"
+                                                required="required" placeholder="专辑封面图" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">专辑语种:
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="albumPicLag" class="form-control col-md-7 col-xs-12"
+                                                data-validate-length-range="20" data-validate-words="1"
+                                                name="albumPicLag" required="required" placeholder="专辑语种"
+                                                type="text">
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" onclick="modify(); event.cancelBubble = true ;"
+                                        class="btn btn-success">保存</button>
+                                    <button type="button" onclick="back()" class="btn btn-primary" id="back">返回</button>
+                                    <br /><br />
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">©2019 All Rights Reserved.</div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="../statics/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../statics/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../statics/js/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../statics/js/nprogress.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="../statics/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../statics/js/custom.min.js"></script>
+
+    <script src="./js/modify.js"> </script>
+
+</body>
+
+
+</html>

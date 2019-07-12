@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ranking list</title>
+    <link rel="stylesheet" href="./css/rankingList.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/homePage.css">
+    <link rel="stylesheet" href="./css/ly.css">
+    <script src="js/jQuery.js"></script>
+    <script src="js/renkingList.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#search").keydown(function () {
+                if(event.keyCode==13){
+                    var searchContent = $("#search").val();
+                    if(searchContent!=null||searchContent!=""){
+                        alert(searchContent);
+                        window.location.href="search.html?searchContent="+ encodeURI(encodeURI(searchContent));
+                    }
+                }
+            })
+        });
+
+        // 点击用户名退出登录
+        $(function(){
+            $("#registerSpan").click(function(){
+                // alert("点击了!");
+                $.confirm({
+                    title: '确认',
+                    content: '确认退出?',
+
+                    buttons: {
+                        ok: {
+                            text: '确认',
+                            // btnClass: 'btn-primary',
+                            action: function() {
+                                $.ajax({
+                                    xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                                    contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                                    url: "http://localhost:8080/exitUser.do",
+                                    type: 'POST',
+                                    data: {},
+                                    dataType: 'json',
+                                    success: function (flg) {
+                                        if(flg){
+                                            alert("退出成功!");
+                                            $(location).prop("href","./index.html");
+                                        }
+                                    },
+                                    error: function () {
+                                        console.log('请求超时或系统出错!');
+                                    }
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '取消',
+                            action: function() {
+                                // alert("点击了取消");
+                            }
+                            // btnClass: 'btn-primary'
+                        }
+                    }
+                });
+            });
+
+        });
+
+        $(function(){
+            $.ajax({
+                xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                url: "http://localhost:8080/getSession.do",
+                type: 'POST',
+                data: {},
+                dataType: 'json',
+                success: function (requestapi) {
+                    if(requestapi.data != null){
+                        // 整体替换
+                        // $("#reg_text").html("<div class=\"reg_text\"><span style=\"font-size: 16px\"><span>欢迎你</span> <span>,</span> <a href=\"#\" id=\"userName\">"
+                        // + requestapi.data[0].userName
+                        // +"</a></span></div>\n"
+                        // +"</div>");
+
+                        $("#loginSpan").text("欢迎你");
+                        $("#registerSpan").text(requestapi.data[0].userName);
+                        $("#placehoder").text(",");
+                        // alert(requestapi.data[0].userName);
+                    }
+                },
+                error: function () {
+                  console.log('请求超时或系统出错!');
+                }
+            });
+        });
+        $(function () {
+            $("#search").keydown(function () {
+                if(event.keyCode==13){
+                    var searchContent = $("#search").val();
+                    if(searchContent!=null||searchContent!=""){
+                        alert(searchContent);
+                        window.location.href="search.html?searchContent="+ encodeURI(encodeURI(searchContent));
+                    }
+                }
+            })
+        });
+
+    </script>
+</head>
+<body style="overflow-y: scroll">
+<div class="header">
+    <div class="container" style="width:1500px;">
+        <div class="header" >
+            <div class="flex_c">
+                <a href="./index.html" class="header-logo">
+                <span class="logo"
+                      style="    text-shadow: -7px 5px 4px #ffdd39;font-size: 35px;font-family: 华文楷体;font-weight: bold">阿狸音乐</span>
+                </a>
+                <ul class="nav">
+                    <li class="item active"><a href="./index.html">发现音乐</a></li>
+                    <li class="item "><a href="">下载客户端</a></li>
+                    <li class="item "><a href="">音乐现场</a></li>
+                    <li class="item "><a href="">VIP会员</a></li>
+                    <li class="item "><a href="">酷我耳机</a></li>
+                    <li class="item "><a href="">更多<span class="iconfont">&#xe65a;</span></a></li>
+                </ul>
+            </div>
+            <div class="flex_c nav_r">
+                <div class="search_out">
+                    <div>
+                        <div class="search_inn flex_c">
+                            <span class="iconfont">&#xe6a2;</span>
+                            <input id="search" maxlength="128" type="text" placeholder="搜索音乐/MV/歌单/歌手" value="" class="search"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div id="reg_text" class="reg_text"><span id="loginSpan"><a href="./login.html">登录</a></span> <span id="placehoder">/</span> <span id="registerSpan"><a
+                        href="./register.html">注册</a></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="_nuxt">
+    <div class="page">
+
+
+        <div class="container">
+            <div>
+                <div class="sub_nav">
+                    <a href="./index.html" class="">推荐</a>
+                    <a href="./renkingList.html" class="active">排行榜</a>
+                    <a href="./Singers.html" class="">歌手</a>
+                    <a href="javascript:;" class="">歌单</a>
+                    <a href="javascript:;" class="">MV</a>
+                </div>
+
+                <div class="main_con">
+                    <div class="rankCon_l">
+                        <div class="rankCon">
+                            <div class="rankTabs rankrankFlex_c">
+                                <span class="active">官方榜</span>
+                            </div>
+                            <ul class="tab_con">
+                                <li class="rankFlex_c ">
+                                    <img class="cover" src="http://img3.kwcdn.kuwo.cn/star/upload/1/5/1561417260.png"
+                                         alt="">
+                                    <div class="item_info" onclick="getSongListSpeed(1)">
+                                        <p class="name">阿狸飙升榜</p>
+                                        <p class="time">今日更新</p>
+                                    </div>
+                                </li>
+                                <li class="rankFlex_c">
+                                    <img class="cover" src="http://img3.kwcdn.kuwo.cn/star/upload/3/5/1561417245.png"
+                                         alt="">
+                                    <div class="item_info" onclick="getSongListNew(1)">
+                                        <p class="name">阿狸新歌榜</p>
+                                        <p class="time">今日更新</p>
+                                    </div>
+                                </li>
+                                <li class="rankFlex_c">
+                                    <img class="cover" src="http://img3.kwcdn.kuwo.cn/star/upload/3/9/1561417262.png"
+                                         alt="">
+                                    <div class="item_info" onclick="getSongListHot(1)">
+                                        <p class="name">阿狸热歌榜</p>
+                                        <p class="time">今日更新</p>
+                                    </div>
+                                </li>
+                                <li class="rankFlex_c">
+                                    <img class="cover" src="http://img3.kwcdn.kuwo.cn/star/upload/0/7/1561417267.png"
+                                         alt="">
+                                    <div class="item_info" onclick="getSongListHan(1)">
+                                        <p class="name">阿狸韩语榜</p>
+                                        <p class="time">今日更新</p>
+                                    </div>
+                                </li>
+                                <li class="rankFlex_c">
+                                    <img class="cover" src="http://img3.kwcdn.kuwo.cn/star/upload/3/5/1561417245.png"
+                                         alt="">
+                                    <div class="item_info" onclick="getSongListAmericanSong(1)">
+                                        <p class="name">阿狸欧美榜</p>
+                                        <p class="time">今日更新</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="con_r">
+                        <div>
+                            <div>
+                                <span class="title" id="title">会员畅听榜</span>
+                            </div>
+                            <div class="btns">
+                                <button class="play bg_primary">
+                                    <i class="iconfont icon-">&#xe8bd;</i>
+                                    <span>全部播放</span>
+                                </button>
+                                <audio id="musicplay" src="" id="audio" controls="controls"style="margin-left: 500px" ></audio>
+
+                                </div>
+                            <div class="list-out">
+                                <div>
+                                    <div class="list_head head_name_rank">
+                                        <ul class="rankFlex_c">
+                                            <li class="head_num">序号</li>
+                                            <li class="head_name">歌曲</li>
+                                            <li class="head_artist">歌手</li>
+                                            <li class="head_album">专辑</li>
+                                            <li class="head_time">时常</li>
+                                        </ul>
+                                    </div>
+                                    <ul class="rank_list" id="songInner">
+
+                                    </ul>
+                                </div>
+                                <div id="pageSize">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="ly_footer">
+    <div class="ly_foot_body">
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">下载酷我音乐客户端</h2><br>
+            <a href="#">
+                <img src="./img/wr_before.png">
+                <p>PC版</p>
+            </a>
+
+            <a href="#">
+                <img src="./img/ad_before.png">
+                <p>Android</p>
+            </a>
+            <a href="#">
+                <img src="./img/ip_before.png">
+                <p>iphone版</p>
+            </a>
+
+        </div>
+
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">协议与声明</h2><br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">用户服务协议</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">免责声明</a>
+
+            <br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">隐私政策</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">权利声明</a>
+
+            <br>
+        </div>
+
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">其他</h2><br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">联系我们</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">免责声明</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">诚聘英才</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">广告服务</a>
+
+            <a style="width: 60%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">未成年人家长监控工程</a>
+
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+</html>

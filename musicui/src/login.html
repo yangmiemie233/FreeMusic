@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <meta charset="UTF-8">
+                <title>首页</title>
+                <link rel="stylesheet" href="./css/homePage.css">
+                <link rel="stylesheet" href="./css/iconfont.css">
+                <script src="./js/jQuery.js"></script>
+                <script type="text/javascript">
+                        $(function(){
+                            $("#loginBtn").click(function(){
+                            var username = $("#username").val();
+                            var password = $("#password").val();
+                            if (username != "" && password != ""){
+                                $.ajax({
+                                xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                                contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                                url: "http://localhost:8080/login.do",
+                                type: 'POST',
+                                data: {username: username,password: password},
+                                dataType: 'json',
+                                success: function (requestapi) {
+                                    if(requestapi.data !=null && (requestapi.data).length >0){
+                                        // alert("登录成功!");
+                                        $(location).prop("href","./index.html");
+                                    }else{
+                                        alert("用户名或密码错误,请重新输入!");
+                                    }
+                                },
+                                error: function () {
+                                    console.log('请求超时或系统出错!');
+                            }
+                            });
+                            }
+                        });
+                    });
+                        $(function () {
+                            $("#search").keydown(function () {
+                                if(event.keyCode==13){
+                                    var searchContent = $("#search").val();
+                                    if(searchContent!=null||searchContent!=""){
+                                        alert(searchContent);
+                                        window.location.href="search.html?searchContent="+ encodeURI(encodeURI(searchContent));
+                                    }
+                                }
+                            })
+                        });
+
+                </script>
+        </head>
+        <body>
+            <div class="page">
+            <div class="header">
+                <div class="container" style="width:1500px;">
+                    <div class="header" >
+                        <div class="flex_c">
+                            <a href="./index.html" class="header-logo">
+                <span class="logo"
+                      style="    text-shadow: -7px 5px 4px #ffdd39;font-size: 35px;font-family: 华文楷体;font-weight: bold">阿狸音乐</span>
+                            </a>
+                            <ul class="nav">
+                                <li class="item active"><a href="./index.html">发现音乐</a></li>
+                                <li class="item "><a href="">下载客户端</a></li>
+                                <li class="item "><a href="">音乐现场</a></li>
+                                <li class="item "><a href="">VIP会员</a></li>
+                                <li class="item "><a href="">酷我耳机</a></li>
+                                <li class="item "><a href="">更多<span class="iconfont">&#xe65a;</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="flex_c nav_r">
+                            <div class="search_out">
+                                <div>
+                                    <div class="search_inn flex_c">
+                                        <span class="iconfont">&#xe6a2;</span>
+                                        <input id="search" maxlength="128" type="text" placeholder="搜索音乐/MV/歌单/歌手" value="" class="search"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="reg_text"><span><a href="./login.html">登录</a></span> <span
+                            >/</span> <span><a href="./register.html">注册</a></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper">
+                    <div class="wrapper-login" style="width: 50%">
+                        <div class="icont"></div>
+                        <div class="title"><span>Login</span></div>
+                        <div class="container-form">
+                            <div>
+                                <div class="wrapper-username">
+                                        <span class="iconfont">&#xe66c;</span>
+                                        <input id="username" type="text" class="username" placeholder="username" required>
+                                    </div>
+                                    <div class="wrapper-password">
+                                        <span class="iconfont">&#xe63d;</span>
+                                        <input id="password" type="password" class="password" placeholder="password" required>
+                                    </div>
+                                    <div class="wrapper-forget">
+                                        <a href="#">忘记密码</a>
+                                    </div>
+                                <button id="loginBtn" class="btn btn-primary">登录</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body> 
+</html>

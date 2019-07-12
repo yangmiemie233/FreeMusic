@@ -1,0 +1,21 @@
+.personContent {
+    width: 100%;
+    min-height: 500px;
+
+
+}
+
+.person {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+
+
+}
+
+.person-img img
+{
+    width: 100px;
+    margin: 20px auto;
+}
+

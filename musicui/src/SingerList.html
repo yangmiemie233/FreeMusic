@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="./css/homePage.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/SingerList.css">
+    <link rel="stylesheet" href="https://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="js/jQuery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+
+        // 点击用户名退出登录
+        $(function(){
+            $("#registerSpan").click(function(){
+                // alert("点击了!");
+                $.confirm({
+                    title: '确认',
+                    content: '确认退出?',
+
+                    buttons: {
+                        ok: {
+                            text: '确认',
+                            // btnClass: 'btn-primary',
+                            action: function() {
+                                $.ajax({
+                                    xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                                    contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                                    url: "http://localhost:8080/exitUser.do",
+                                    type: 'POST',
+                                    data: {},
+                                    dataType: 'json',
+                                    success: function (flg) {
+                                        if(flg){
+                                            alert("退出成功!");
+                                            $(location).prop("href","./index.html");
+                                        }
+                                    },
+                                    error: function () {
+                                        console.log('请求超时或系统出错!');
+                                    }
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '取消',
+                            action: function() {
+                                // alert("点击了取消");
+                            }
+                            // btnClass: 'btn-primary'
+                        }
+                    }
+                });
+            });
+
+        });
+
+        $(function(){
+            $.ajax({
+                xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                url: "http://localhost:8080/getSession.do",
+                type: 'POST',
+                data: {},
+                dataType: 'json',
+                success: function (requestapi) {
+                    if(requestapi.data != null){
+                        // 整体替换
+                        // $("#reg_text").html("<div class=\"reg_text\"><span style=\"font-size: 16px\"><span>欢迎你</span> <span>,</span> <a href=\"#\" id=\"userName\">"
+                        // + requestapi.data[0].userName
+                        // +"</a></span></div>\n"
+                        // +"</div>");
+
+                        $("#loginSpan").text("欢迎你");
+                        $("#registerSpan").text(requestapi.data[0].userName);
+                        $("#placehoder").text(",");
+                        // alert(requestapi.data[0].userName);
+                    }
+                },
+                error: function () {
+                  console.log('请求超时或系统出错!');
+                }
+            });
+        });
+
+    </script>
+
+
+
+</head>
+
+
+<body>
+<div class="page">
+    <div class="header">
+        <div class="container">
+            <div class="header">
+                <div class="flex_c">
+                    <a href="./index.html" class="header-logo">
+                <span class="logo"
+                      style="    text-shadow: -7px 5px 4px #ffdd39;font-size: 35px;font-family: 华文楷体;font-weight: bold">阿狸音乐</span>
+                    </a>
+                    <ul class="nav">
+                        <li class="item active"><a href="./index.html">发现音乐</a></li>
+                        <li class="item "><a href="">下载客户端</a></li>
+                        <li class="item "><a href="">音乐现场</a></li>
+                        <li class="item "><a href="">VIP会员</a></li>
+                        <li class="item "><a href="">酷我耳机</a></li>
+                        <li class="item "><a href="">更多<span class="iconfont">&#xe65a;</span></a></li>
+                    </ul>
+                </div>
+                <div class="flex_c nav_r">
+                    <div class="search_out">
+                        <div>
+                            <div class="search_inn flex_c">
+                                <span class="iconfont">&#xe6a2;</span>
+                                <input maxlength="128" type="text" placeholder="搜索音乐/MV/歌单/歌手" value="" class="search"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div id="reg_text" class="reg_text"><span id="loginSpan"><a href="./login.html">登录</a></span> <span id="placehoder">/</span> <span id="registerSpan"><a
+                            href="./register.html">注册</a></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sub_nav">
+        <a href="./index.html" class="active">推荐</a>
+        <a href="./renkingList.html" class="">排行榜</a>
+        <a href="./Singers.html" class="">歌手</a>
+        <a href="javascript:;" class="">歌单</a>
+        <a href="javascript:;" class="">MV</a>
+    </div>
+    <div class="singer-head">
+        <div class="singer-content">
+            <div class="singer-content-center">
+                <div class="singer-left">
+                    <img src="" id="singerImage">
+                </div>
+                <div class="singer-right">
+                    <p class="title">
+                   <span class="singername" id="singername">
+
+                   </span>
+                    </p>
+                    <div class="number">
+                        <span>单曲：<span class="num" id="songsNum"></span></span>
+                        <span>专辑：<span class="num" id="albumNum"></span></span>
+                        <span>粉丝：<span class="num" id="fansNum"></span></span>
+                    </div>
+
+                    <div class="singer_items flex_c">
+                        <p>
+                            <span>英文名：<span id="englishName"></span></span>
+                            <span>国籍：<span id="nation"></span></span>
+                            <span>语言：<span id="language"></span></span>
+                            <span>出生地：<span id="area"></span></span>
+                            <span>星座：<span id="xingzuo"></span></span>
+                        </p>
+
+                    </div>
+
+
+                    <div class="broadcast">
+                        <div class="play" id="play">
+                            <button onclick="getOneSingerSong(1)"><span class="iconfont">&#xe8bd;</span>播放全部歌曲</button>
+                        </div>
+                        <div class="save">
+                            <button><span class="iconfont">&#xe6bc;</span>收藏</button>
+                        </div>
+                        <div class="client">
+                            <button>
+                                <span class="iconfont">&#xe682;</span>
+                                使用客户端查看歌手
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="singer-list">
+        <div class="list">
+            <div class="con_l">
+                <ul class="con_l_ul">
+                    <li>
+                        <a class="" id="getSingerSong" href="#"  onclick="getSingerSong(1)"><span class="active">单曲</span></a>
+                        <span class="" id="getSingerAlbum" onclick="getSingerAlbum(1)">专辑</span>
+
+                    </li>
+                </ul>
+
+                <div id="singerInner">
+
+                <div class="list_head head_name_singer" id="singerUl">
+                    <ul class="flex_c">
+                        <li class="head_num">序号</li>
+                        <li class="head_name">歌曲</li>
+                        <li class="head_album">专辑</li>
+                        <li class="head_time">时长</li>
+                    </ul>
+                </div>
+                <ul class="singer_list" id="singerSongs">
+
+                </ul>
+                </div>
+
+                <div id="pageSize">
+                </div>
+
+            </div>
+
+            <div class="con_r"><h3>下载酷我音乐</h3>
+                <p class="tip">无损音质，还原爱豆动听原声</p>
+                <div class="iconfont-list">
+                    <div class="one">
+                        <span class="iconfont">&#xe633;</span>
+                    </div>
+                    <div class="two">
+                        <span class="iconfont">&#xe64a;</span>
+                    </div>
+                    <div class="three">
+                        <span class="iconfont">&#xe607;</span>
+                    </div>
+                </div>
+                <audio id="musicplay" src="" id="audio" controls="controls" ></audio>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="js/SingerList.js"></script>
+</html>

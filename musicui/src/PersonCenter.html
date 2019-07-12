@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>酷我音乐</title>
+
+    <link rel="stylesheet" href="css/index.css">
+    <link type="text/css" href="./css/ly.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/homePage.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/album.css">
+    <link rel="stylesheet" href="./css/PersonCenter.css">
+    <script src="./js/jQuery.js"></script>
+    <!-- 引入js文件 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+        /*$(function () {
+            $('#myTab li:eq(0) a').tab('show');
+        });
+
+        $(function () {
+            $('#myTab1 li:eq(0) a').tab('show');
+        });*/
+
+        // 点击用户名退出登录
+        $(function(){
+            $("#registerSpan").click(function(){
+                // alert("点击了!");
+                $.confirm({
+                    title: '确认',
+                    content: '确认退出?',
+                    buttons: {
+                        ok: {
+                            text: '确认',
+                            // btnClass: 'btn-primary',
+                            action: function() {
+                                $.ajax({
+                                    xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                                    contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                                    url: "http://localhost:8080/exitUser.do",
+                                    type: 'POST',
+                                    data: {},
+                                    dataType: 'json',
+                                    success: function (flg) {
+                                        if(flg){
+                                            alert("退出成功!");
+                                            $(location).prop("href","./index.html");
+                                        }
+                                    },
+                                    error: function () {
+                                        console.log('请求超时或系统出错!');
+                                    }
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '取消',
+                            action: function() {
+                                // alert("点击了取消");
+                            }
+                            // btnClass: 'btn-primary'
+                        }
+                    }
+                });
+            });
+
+        });
+        $(function () {
+            $("#search").keydown(function () {
+                if(event.keyCode==13){
+                    var searchContent = $("#search").val();
+                    if(searchContent!=null||searchContent!=""){
+                        alert(searchContent);
+                        window.location.href="search.html?searchContent="+ encodeURI(encodeURI(searchContent));
+                    }
+                }
+            })
+        });
+
+
+        $(function(){
+            $.ajax({
+                xhrFields:{withCredentials:true},//前端适配：允许session跨域
+                contentType:"application/x-www-form-urlencoded",//表单数据发送编码类型
+                url: "http://localhost:8080/getSession.do",
+                type: 'POST',
+                data: {},
+                dataType: 'json',
+                success: function (requestapi) {
+                    if(requestapi.data != null){
+                        // 整体替换
+                        // $("#reg_text").html("<div class=\"reg_text\"><span style=\"font-size: 16px\"><span>欢迎你</span> <span>,</span> <a href=\"#\" id=\"userName\">"
+                        // + requestapi.data[0].userName
+                        // +"</a></span></div>\n"
+                        // +"</div>");
+
+                        $("#loginSpan").text("欢迎你");
+                        $("#registerSpan").text(requestapi.data[0].userName);
+                        $("#placehoder").text(",");
+                        // alert(requestapi.data[0].userName);
+                    }
+                },
+                error: function () {
+                    console.log('请求超时或系统出错!');
+                }
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+<!--头部-->
+<div class="container" style="width:1500px;">
+    <div class="header">
+        <div class="flex_c">
+            <a href="./index.html" class="header-logo">
+                <span class="logo"
+                      style="    text-shadow: -7px 5px 4px #ffdd39;font-size: 35px;font-family: 华文楷体;font-weight: bold">阿狸音乐</span>
+            </a>
+            <ul class="nav">
+                <li class="item active"><a href="./index.html">发现音乐</a></li>
+                <li class="item "><a href="">下载客户端</a></li>
+                <li class="item "><a href="">音乐现场</a></li>
+                <li class="item "><a href="">VIP会员</a></li>
+                <li class="item "><a href="">酷我耳机</a></li>
+                <li class="item "><a href="">更多<span class="iconfont">&#xe65a;</span></a></li>
+            </ul>
+        </div>
+        <div class="flex_c nav_r">
+            <div class="search_out">
+                <div>
+                    <div class="search_inn flex_c">
+                        <span class="iconfont">&#xe6a2;</span>
+                        <input maxlength="128" type="text" placeholder="搜索音乐/MV/歌单/歌手" value="" class="search">
+                    </div>
+                </div>
+            </div>
+            <div id="reg_text" class="reg_text"><span id="loginSpan"><a href="./login.html">登录</a></span> <span id="placehoder">/</span> <span id="registerSpan"><a
+                    href="./register.html">注册</a></span></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="personContent">
+    <div class="person">
+        <div class="person-img">
+            <img src="img/cool.png"></div>
+        <p>fdgfg</p>
+    </div>
+</div>
+
+<!--底部-->
+<div class="ly_content_body"></div>
+<div class="clearfix"></div>
+<div class="ly_footer">
+    <div class="ly_foot_body">
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">下载酷我音乐客户端</h2><br>
+            <a href="#">
+                <img src="./img/wr_before.png">
+                <p>PC版</p>
+            </a>
+
+            <a href="#">
+                <img src="./img/ad_before.png">
+                <p>Android</p>
+            </a>
+            <a href="#">
+                <img src="./img/ip_before.png">
+                <p>iphone版</p>
+            </a>
+
+        </div>
+
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">协议与声明</h2><br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">用户服务协议</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">免责声明</a>
+
+            <br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">隐私政策</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;" href="#">权利声明</a>
+
+            <br>
+        </div>
+
+        <div class="ly_foot_body_content">
+            <h2 style="line-height: 30px;">其他</h2><br>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">联系我们</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">免责声明</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">诚聘英才</a>
+
+            <a style="width: 32%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">广告服务</a>
+
+            <a style="width: 60%;font-size: 12px;font-weight: 200;margin-right: 0px;" href="#">未成年人家长监控工程</a>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+
+</html>
